@@ -14,8 +14,9 @@ class ELEMENTALDEFENDER_API AEnemy : public APawn
 public:
 	// Sets default values for this pawn's properties
 	AEnemy();
-
+	TArray<AActor*> ListActor;
 	void HandleDestruction();
+	float EnemySpeed = 50.0f;
 
 protected:
 	// Called when the game starts or when spawned
