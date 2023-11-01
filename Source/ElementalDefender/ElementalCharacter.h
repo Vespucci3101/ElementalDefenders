@@ -17,7 +17,11 @@ public:
 	// Sets default values for this character's properties
 	AElementalCharacter();
 
-	bool jumping = false;
+	UPROPERTY(BlueprintReadonly) bool jumping = false;
+	UPROPERTY(BlueprintReadonly) bool IsMovingForward = false;
+	UPROPERTY(BlueprintReadonly) bool IsMovingRight = false;
+	UPROPERTY(BlueprintReadonly) bool IsMovingForwardOrBackward = false;
+	UPROPERTY(BlueprintReadonly) bool IsMovingRightOrLeft = false;
 	float PlayerSpeed = 5000.f;
 	FVector CurrentVelocity;
 

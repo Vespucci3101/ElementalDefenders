@@ -4,6 +4,8 @@
 #include "HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "ElementalDefenderGameModeBase.h"
+#include "Enemy.h"
+#include "ElementalCharacter.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -40,9 +42,20 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::DamageTaken(AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser)
 {
-	if (Damage <= 0.f) return;
-
 	health -= Damage;
+	
+	if (health < 0) health = 0.f;
+	if (health > maxHealth) health = maxHealth;
 
-	if (health <= 0.f && ElementalDefenderGameModeBase) ElementalDefenderGameModeBase->ActorDied(DamageActor);
+	if (health <= 0.f && ElementalDefenderGameModeBase)
+	{
+		IsDead = true;
+		ElementalDefenderGameModeBase->ActorDied(DamageActor);
+	}
+
+}
+
+void UHealthComponent::RegenerateHealth(float healthGain, AActor* otherActor)
+{
+	UGameplayStatics::ApplyDamage(otherActor, -1 * healthGain, GetOwner()->GetInstigatorController(), GetOwner(), UDamageType::StaticClass());
 }

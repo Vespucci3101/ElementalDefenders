@@ -2,10 +2,8 @@
 
 
 #include "Enemy.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "ElementalCharacter.h"
+
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -24,24 +22,8 @@ void AEnemy::BeginPlay()
 // Called every frame
 void AEnemy::Tick(float DeltaTime)
 {
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AElementalCharacter::StaticClass(), ListActor);
-    Super::Tick(DeltaTime);
-    if (ListActor.Num() > 0) {
-
-            FVector PlayerLocation = ListActor[0]->GetActorLocation();
-            FVector EnemyLocation = GetActorLocation();
-
-            // Calculez la direction du joueur vers l'ennemi
-            FVector DirectionToPlayer = (PlayerLocation - EnemyLocation).GetSafeNormal();
-
-       // Déplacez l'ennemi vers le joueur avec une certaine vitesse
-       FVector NewLocation = EnemyLocation + DirectionToPlayer * EnemySpeed * DeltaTime;
-       SetActorLocation(NewLocation);
-
-    }
+	Super::Tick(DeltaTime);
 }
-
-
 
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

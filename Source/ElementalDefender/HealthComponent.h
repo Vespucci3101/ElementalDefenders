@@ -13,6 +13,11 @@ class ELEMENTALDEFENDER_API UHealthComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+
+	UPROPERTY(BlueprintReadOnly) bool IsDead = false;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly) float maxHealth = 100.f;
+	UPROPERTY(BlueprintReadOnly) float health = 0.f;
+
 	// Sets default values for this component's properties
 	UHealthComponent();
 
@@ -21,9 +26,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere) float maxHealth = 100.f;
-	float health = 0.f;
-
 	UFUNCTION()
 	void DamageTaken(AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
 
@@ -33,5 +35,5 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	void RegenerateHealth(float healthGain, AActor* otherActor);
 };

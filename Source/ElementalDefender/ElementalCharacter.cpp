@@ -37,7 +37,7 @@ AElementalCharacter::AElementalCharacter()
 void AElementalCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -68,11 +68,34 @@ void AElementalCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 void AElementalCharacter::MoveForward(float AxisValue)
 {
+	if (AxisValue == 0) IsMovingForwardOrBackward = false;
+	else if (AxisValue > 0) {
+		IsMovingForward = true;
+		IsMovingForwardOrBackward = true;
+	}
+	else 
+	{
+		IsMovingForward = false;
+		IsMovingForwardOrBackward = true;
+	}
+
 	AddMovementInput(GetActorForwardVector() * PlayerSpeed, AxisValue);
 }
 
 void AElementalCharacter::MoveLeftRight(float AxisValue)
 {
+	if (AxisValue == 0) IsMovingRightOrLeft = false;
+	else if (AxisValue > 0)
+	{
+		IsMovingRight = true;
+		IsMovingRightOrLeft = true;
+	}
+	else
+	{
+		IsMovingRight = false;
+		IsMovingRightOrLeft = true;
+	}
+
 	AddMovementInput(GetActorRightVector() * PlayerSpeed, AxisValue);
 }
 

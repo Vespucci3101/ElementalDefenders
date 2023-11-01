@@ -25,6 +25,8 @@ public:
 
 	void CheckDistanceOfProjectile();
 
+	bool IsValidTarget(AActor* OtherActor);
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true")) UStaticMeshComponent* projectileMesh;
 

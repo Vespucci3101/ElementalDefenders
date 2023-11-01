@@ -16,4 +16,7 @@ class ELEMENTALDEFENDER_API AElementalDefenderGameModeBase : public AGameModeBas
 	
 public:
 	void ActorDied(AActor* actorDied);
+
+protected:
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };

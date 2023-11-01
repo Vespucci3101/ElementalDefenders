@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Zone.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -39,7 +40,13 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 {
 	AActor* myOwner = GetOwner();
 	if (myOwner == nullptr) return;
-
+	
+	if (!IsValidTarget(OtherActor))
+	{
+		Destroy();
+		return;
+	}
+	
 	if (OtherActor && OtherActor != this && OtherActor != myOwner)
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, damage, myOwner->GetInstigatorController(), this, UDamageType::StaticClass());
@@ -51,4 +58,10 @@ void AProjectile::CheckDistanceOfProjectile()
 {
 	float dist = FVector::Dist(GetActorLocation(), GetOwner()->GetActorLocation());
 	if (dist >= projectileMaxDistance) Destroy();
+}
+
+bool AProjectile::IsValidTarget(AActor* OtherActor)
+{
+	if (AZone* zone = Cast<AZone>(OtherActor)) return false;
+	return true;
 }
